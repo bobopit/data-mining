@@ -1,0 +1,121 @@
+﻿数据探索性分析与数据预处理
+数据集一：NFL Play-by-Play 2009-2017
+1. 数据摘要
+i. 标称属性
+以“FirstDown”属性为例，列举出了所有可能的取值，以及对应的频数：
+
+
+
+
+
+
+
+由于数据量较大,数据结果保存在/NFL Play by Plays/result_NFL_nominal.txt中
+
+ii. 数值属性
+以“Home_WP_pre”属性为例，分别给出了非空值数据的个数（count），平均值（mean），方差（std），最小值（min），四分位数（min，25%，50%，75%，max）以及最大值（max）。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+数据结果保存在/NFL Play by Plays/result_NFL_numerical.txt中
+2数据可视化
+针对数值属性，
+绘制直方图，用qq图检验其分布是否为正态分布。
+直方图如下所示:
+
+qq图如下所示:
+
+由各个属性的qq图可以看出,属性ExpPts和EPA满足正态分布
+
+绘制盒图，对离群值进行识别
+盒图如下所示:
+
+从各个属性的盒图观察可得,属性PlayTimeDiff、ydstogo、ydsnet、GoalToGo、Yards.Gained、sp、Touchdown、Safety、Onsidekick、AirYards、YardsAfterCatch、QBHit、Interception Thrown、Reception、Fumble、Sack、Challenge.Replay、Accepted.Penalty、Penalty.Yards、PosTeamScore、DefTeamScore、ScoreDiff、AbsScoreDiff、Timeout_Indicator、posteam_timeouts_pre、HomeTimeouts_Remaining_Pre、AwayTimeouts_Remaining_Pre、HomeTimeouts_Remaining_Post、AwayTimeouts_Remaining_Post、No_Score_Prob、Opp_Field_Goal_Prob、Opp_Safety_Prob、Field_Goal_Prob、Safety_Prob、Touchdown_Prob、ExPoint_Prob、TwoPoint_Prob、ExpPts、EPA、airEPA、yacEPA、WPA、airWPA、yacWPA存在离群值
+
+
+2. 数据缺失
+i. 数据缺失原因
+观察数据集中缺失的数据，原因主要是：
+ii. 处理缺失数据
+剔除缺失部分（绿色） vs 用最高频率值来填补缺失值（蓝色）,下面都以属性“TimeUnder”为例
+
+对于数值属性，可以通过计算协方差矩阵，来判断数据之间的相似度，利用属性的相关关系来填补缺失值。下图截取部分协方差矩阵值，观察可以发现，”Drive“属性和”qtr“属性相关系数为0.91，二者之间的正相关性很高，因此当其中一个数据缺失时，可以使用另一个数据值进行填充。同理，”TimeSecs“属性和”Drive“、”qtr“属性之间的负相关性很高，它们之间也可以相互填补缺失值。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+数据集二：San Francisco Building Permits
+1. 数据摘要
+i. 标称属性
+以“Permit Type Definition”属性为例，列举出了所有可能的取值，以及对应的频数：
+
+{'otc alterations permit': 178844, 
+ 'new construction wood frame': 950,  
+ 'sign - erect': 2892, 
+ 'additions alterations or repairs': 14663,
+ 'grade or quarry or fill or excavate': 91, 
+ 'demolitions': 600, 
+ 'new construction': 349, 
+ 'wall or painted sign': 511}
+
+ii. 数值属性
+以“Permit Type”属性为例，分别给出了非空值数据的个数（count），平均值（mean），方差（std），最小值（min），四分位数（min，25%，50%，75%，max）以及最大值（max）。
+
+2数据可视化
+针对数值属性，
+绘制直方图，用qq图检验其分布是否为正态分布。
+直方图如下所示:
+
+
+qq图如下所示:
+
+由各个属性的qq图可以看出,无属性满足正态分布
+
+绘制盒图，对离群值进行识别
+盒图如下所示:
+
+从各个属性的盒图观察可得,属性Permit Type、Street Number、Unit、Number of Existing Stories、Number of Proposed Stories、Estimated Cost、Revised Cost、Existing Units、Proposed Units、Plansets、Zipcode、Record ID存在离群值
+
+
+
+3. 数据缺失
+i. 数据缺失原因
+观察数据集中缺失的数据，原因主要是：
+ii. 处理缺失数据
+剔除缺失部分（黄色） vs 用最高频率值来填补缺失值（粉色）， Number of Existing Stories为例
+
+对于数值属性，可以通过计算协方差矩阵，来判断数据之间的相似度，利用属性的相关关系来填补缺失值。下图截取部分协方差矩阵值，观察可以发现，”Number of Existing Stories“属性和”Number of Proposed Stories“属性相关系数为0.99，二者之间的相关性很高，因此当其中一个数据缺失时，可以使用另一个数据值进行填充。同理，”Estimated Cost“属性和”Revised Cost“属性之间的相关系数为0.97，也可以相互填补缺失值。
+
+
+
+
+
+
